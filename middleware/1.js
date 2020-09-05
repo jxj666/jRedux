@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-05 23:54:15
+ * @LastEditTime: 2020-09-06 01:27:20
  * @LastEditors: jinxiaojian
  */
 import {createStore} from  '../createStore.js'
@@ -53,9 +53,9 @@ let store = createStore(reducer);
 /*重写了store.dispatch*/
 const next = store.dispatch;
 store.dispatch = (action) => {
-  console.log('this state', store.getState(),'action', action);
+  console.log('in dispatch',JSON.stringify(store.getState()) ,'action',JSON.stringify(action) );
   next(action);
-  console.log('next state', store.getState());
+  console.log('out dispatch',JSON.stringify(store.getState()) );
 }
 store.dispatch({
   type: 'INCREMENT'

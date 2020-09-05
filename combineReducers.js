@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-06 00:54:48
+ * @LastEditTime: 2020-09-06 01:28:08
  * @LastEditors: jinxiaojian
  */
 
@@ -10,7 +10,7 @@ export function combineReducers (reducers) {
   const reducerKeys = Object.keys(reducers)
   /*返回合并后的新的reducer函数*/
   return function combination (state = {}, action) {
-    console.log('in combination', state = {}, action)
+    console.log('in combination', state , action)
     /*生成的新的state*/
     const nextState = {}
     /*遍历执行所有的reducers，整合成为一个新的state*/
