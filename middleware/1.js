@@ -1,9 +1,9 @@
 /*
- * @LastEditTime: 2020-09-06 01:27:20
+ * @LastEditTime: 2020-09-06 01:57:52
  * @LastEditors: jinxiaojian
  */
-import {createStore} from  '../createStore.js'
-import {combineReducers} from '../combineReducers.js'
+import { createStore } from '../createStore.js'
+import { combineReducers } from '../combineReducers.js'
 
 function counterReducer (state = {
   count: 0
@@ -49,14 +49,23 @@ const reducer = combineReducers({
 
 
 let store = createStore(reducer);
-// 记录日志
-/*重写了store.dispatch*/
 const next = store.dispatch;
-store.dispatch = (action) => {
-  console.log('in dispatch',JSON.stringify(store.getState()) ,'action',JSON.stringify(action) );
+
+const middleware = (store) => (next) => (action) => {
+  console.log('in dispatch', JSON.stringify(store.getState()), 'action', JSON.stringify(action));
   next(action);
-  console.log('out dispatch',JSON.stringify(store.getState()) );
+  console.log('out dispatch', JSON.stringify(store.getState()));
 }
+const exceptMiddleware = (store) => (next) => (action) => {
+  try {
+    next(action)
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
+
+store.dispatch = exceptMiddleware(store)(middleware(store)(next))
 store.dispatch({
   type: 'INCREMENT'
 });
