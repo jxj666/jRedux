@@ -1,5 +1,5 @@
 <!--
- * @LastEditTime: 2020-09-06 01:10:52
+ * @LastEditTime: 2020-09-06 01:12:20
  * @LastEditors: jinxiaojian
 -->
 # redux
@@ -39,4 +39,4 @@ middleware
 扩展 dispatch 函数！
 
 
-!['流程图'](main.png)
+![main.png](main.png)
