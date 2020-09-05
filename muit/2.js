@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-06 00:36:52
+ * @LastEditTime: 2020-09-06 01:21:32
  * @LastEditors: jinxiaojian
  */
 // 我们需要拆分，一个 state，一个 reducer 写一块
@@ -58,10 +58,11 @@ const reducer = combineReducers({
 
 
 let store = createStore(reducer);
-console.log(store.getState());
+console.log('state1',store.getState());
+
 store.subscribe(() => {
   let state = store.getState();
-  console.log(state);
+  console.log('state2',state);
 });
 /*自增*/
 store.dispatch({
