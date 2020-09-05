@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-05 23:48:53
+ * @LastEditTime: 2020-09-05 23:54:15
  * @LastEditors: jinxiaojian
  */
 import {createStore} from  '../createStore.js'
@@ -22,7 +22,6 @@ function counterReducer (state = {
       return state;
   }
 }
-
 function InfoReducer (state = {
   name: '',
   description: ''
@@ -43,18 +42,13 @@ function InfoReducer (state = {
   }
 }
 
-
-
 const reducer = combineReducers({
   counter: counterReducer,
   info: InfoReducer
 });
 
 
-
-
 let store = createStore(reducer);
-
 // 记录日志
 /*重写了store.dispatch*/
 const next = store.dispatch;
