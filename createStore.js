@@ -1,10 +1,10 @@
 /*
- * @LastEditTime: 2020-09-05 23:52:08
+ * @LastEditTime: 2020-09-06 00:12:08
  * @LastEditors: jinxiaojian
  */
 // createStore，提供了 changeState(dispatch)，getState，subscribe 三个能力
-export const createStore = function (reducer) {
-  let state
+export const createStore = function (reducer,initState) {
+  let state=initState || {}
   let listeners = [];
   /*订阅*/
   function subscribe (listener) {
@@ -28,3 +28,4 @@ export const createStore = function (reducer) {
     getState
   }
 }
+

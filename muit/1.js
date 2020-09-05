@@ -1,8 +1,8 @@
 /*
- * @LastEditTime: 2020-07-07 11:10:28
+ * @LastEditTime: 2020-09-06 00:13:23
  * @LastEditors: jinxiaojian
  */
-
+import {createStore} from '../createStore.js'
 // 拆分reducer
 
 function counterReducer (state, action) {
@@ -72,36 +72,13 @@ let initState = {
     description: '我们都是前端爱好者！'
   }
 }
-const createStore = function (reducer, initState) {
-  let state = initState
-  let listeners = [];
-  /*订阅*/
-  function subscribe (listener) {
-    listeners.push(listener);
-  }
-  function dispatch (action) {
-    state = reducer(state, action);
-    /*当 state 改变的时候，我们要去通知所有的订阅者*/
-    for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
-      listener();
-    }
-  }
-  function getState () {
-    return state
-  }
-  return {
-    subscribe,
-    dispatch,
-    getState
-  }
-}
+
 
 let store = createStore(reducer, initState);
 
 store.subscribe(() => {
   let state = store.getState();
-  console.log(state.counter.count, state.info.name, state.info.description);
+  console.log(state);
 });
 /*自增*/
 store.dispatch({
