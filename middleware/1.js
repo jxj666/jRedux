@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-06 01:57:52
+ * @LastEditTime: 2020-09-06 02:21:13
  * @LastEditors: jinxiaojian
  */
 import { createStore } from '../createStore.js'
@@ -51,21 +51,30 @@ const reducer = combineReducers({
 let store = createStore(reducer);
 const next = store.dispatch;
 
-const middleware = (store) => (next) => (action) => {
-  console.log('in dispatch', JSON.stringify(store.getState()), 'action', JSON.stringify(action));
+const middlewareIn = (store) => (next) => (action) => {
+  console.log('in middlewareIn', JSON.stringify(store.getState()), 'action', JSON.stringify(action));
   next(action);
-  console.log('out dispatch', JSON.stringify(store.getState()));
+  console.log('out middlewareIn', JSON.stringify(store.getState()));
 }
-const exceptMiddleware = (store) => (next) => (action) => {
+const middlewareEx = (store) => (next) => (action) => {
   try {
+    console.log('in middlewareEx')
     next(action)
+    console.log('out middlewareEx')
   } catch (error) {
     console.log('error', error)
   }
 }
 
-
-store.dispatch = exceptMiddleware(store)(middleware(store)(next))
+const middlewareExS=middlewareEx(store)
+const middlewareInS=middlewareIn(store)
+const timeMiddleware = (store) => (next) => (action) => {
+  console.log('in timeMiddleware');
+  next(action);
+  console.log('out timeMiddleware')
+}
+const time = timeMiddleware(store);
+store.dispatch = middlewareExS(time(middlewareInS(next)));
 store.dispatch({
   type: 'INCREMENT'
 });
