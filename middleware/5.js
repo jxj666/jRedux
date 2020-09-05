@@ -1,11 +1,9 @@
 /*
- * @LastEditTime: 2020-07-07 11:33:45
- * @LastEditors: jinxiaojian
- */ 
-/*
- * @LastEditTime: 2020-07-06 20:08:50
+ * @LastEditTime: 2020-09-05 23:48:53
  * @LastEditors: jinxiaojian
  */
+import {createStore} from  '../createStore.js'
+import {combineReducers} from '../combineReducers.js'
 
 function counterReducer (state = {
   count: 0
@@ -45,24 +43,6 @@ function InfoReducer (state = {
   }
 }
 
-function combineReducers (reducers) {
-  /* reducerKeys = ['counter', 'info']*/
-  const reducerKeys = Object.keys(reducers)
-  /*返回合并后的新的reducer函数*/
-  return function combination (state = {}, action) {
-    /*生成的新的state*/
-    const nextState = {}
-    /*遍历执行所有的reducers，整合成为一个新的state*/
-    for (let i = 0; i < reducerKeys.length; i++) {
-      const key = reducerKeys[i]
-      const stateCell = state[key]
-      /*执行 分 reducer，获得新的state*/
-      const newStateCell = reducers[key](stateCell, action)
-      nextState[key] = newStateCell
-    }
-    return nextState;
-  }
-}
 
 
 const reducer = combineReducers({
@@ -71,31 +51,7 @@ const reducer = combineReducers({
 });
 
 
-const createStore = function (reducer) {
-  let state
-  let listeners = [];
-  /*订阅*/
-  function subscribe (listener) {
-    listeners.push(listener);
-  }
-  function dispatch (action) {
-    state = reducer(state, action);
-    /*当 state 改变的时候，我们要去通知所有的订阅者*/
-    for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
-      listener();
-    }
-  }
-  function getState () {
-    return state
-  }
-  dispatch({ type: Symbol() })
-  return {
-    subscribe,
-    dispatch,
-    getState
-  }
-}
+
 
 let store = createStore(reducer);
 
@@ -110,3 +66,4 @@ store.dispatch = (action) => {
 store.dispatch({
   type: 'INCREMENT'
 });
+
