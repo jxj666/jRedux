@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-06 02:27:41
+ * @LastEditTime: 2020-09-06 02:37:59
  * @LastEditors: jinxiaojian
  */
 import { createStore } from '../createStore.js'
@@ -7,6 +7,7 @@ import { combineReducers } from '../combineReducers.js'
 import { middlewareEx } from './ex.js'
 import { middlewareIn } from './in.js'
 import { middlewareTime } from './time.js'
+import {applyMiddleware} from '../applyMiddleware.js'
 
 function counterReducer (state = {
   count: 0
@@ -51,17 +52,15 @@ const reducer = combineReducers({
 });
 
 
-let store = createStore(reducer);
-const next = store.dispatch;
 
 
 
-const middlewareExS = middlewareEx(store)
-const middlewareInS = middlewareIn(store)
-const middlewareTimeS = middlewareTime(store);
 
-store.dispatch = middlewareExS(middlewareTimeS(middlewareInS(next)));
+
+const middlewareAdd = applyMiddleware(middlewareEx,middlewareIn,middlewareTime)
+const newCreateStore=middlewareAdd(createStore)
+let store = newCreateStore(reducer);
+
 store.dispatch({
   type: 'INCREMENT'
 });
-
