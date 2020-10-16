@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-09-06 02:44:23
+ * @LastEditTime: 2020-10-16 19:43:34
  * @LastEditors: jinxiaojian
  */
 export const applyMiddleware = function (...middlewares) {
@@ -11,18 +11,32 @@ export const applyMiddleware = function (...middlewares) {
       const store = oldCreateStore(reducer, initState);
       /*给每个 middleware 传下store，相当于 const logger = loggerMiddleware(store);*/
       /* const chain = [exception, time, logger]*/
-      const chain = middlewares.map(middleware => middleware(store));
-      console.log('chain',chain)
-      let dispatch = store.dispatch;
-      /* 实现 exception(time((logger(dispatch))))*/
-      chain.reverse().map(middleware => {
-        dispatch = middleware(dispatch);
-      });
-      console.log('chain',chain)
+      // const chain = middlewares.map(middleware => middleware(store));
+      // 只允许用 getState 
+      const simpleStore = { getState: store.getState };
+      const chain = middlewares.map(middleware => middleware(simpleStore));
+      // let dispatch = store.dispatch;
+      // /* 实现 exception(time((logger(dispatch))))*/
+      // chain.reverse().map(middleware => {
+      //   dispatch = middleware(dispatch);
+      // });
+
+
+      let dispatch = compose(...chain)(store.dispatch)
+
+      console.log('chain', chain)
 
       /*2. 重写 dispatch*/
       store.dispatch = dispatch;
       return store;
     }
   }
+}
+
+export default function compose (...funcs) {
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+  //[].reduce 数组累加  
+  return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
