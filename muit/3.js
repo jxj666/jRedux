@@ -1,13 +1,14 @@
 /*
- * @LastEditTime: 2020-10-16 20:02:06
+ * @LastEditTime: 2020-10-16 19:58:54
  * @LastEditors: jinxiaojian
  */
+// 我们需要拆分，一个 state，一个 reducer 写一块
+//  拆分state
+
 import { createStore } from '../createStore.js'
 import { combineReducers } from '../combineReducers.js'
-import { middlewareEx } from './ex.js'
-import { middlewareIn } from './in.js'
-import { middlewareTime } from './time.js'
-import {applyMiddleware} from '../applyMiddleware.js'
+
+//将state跟action合并
 
 function counterReducer (state = {
   count: 0
@@ -26,6 +27,7 @@ function counterReducer (state = {
       return state;
   }
 }
+
 function InfoReducer (state = {
   name: '',
   description: ''
@@ -47,6 +49,7 @@ function InfoReducer (state = {
 }
 
 
+
 const reducer = combineReducers({
   counter: counterReducer,
   info: InfoReducer
@@ -54,24 +57,31 @@ const reducer = combineReducers({
 
 
 
+let store = createStore(reducer);
+console.log('state1', store.getState());
 
-
-
-
-// const middlewareAdd = applyMiddleware(middlewareEx,middlewareIn,middlewareTime)
-// const newCreateStore=middlewareAdd(createStore)
-// let store = newCreateStore(reducer);
-
-const rewriteCreateStoreFunc = applyMiddleware(middlewareEx, middlewareIn, middlewareTime);
-const store = createStore(reducer, rewriteCreateStoreFunc);
-const unsubscribe = store.subscribe(() => {
+store.subscribe(() => {
   let state = store.getState();
-  console.log(state.counter.count);
+  console.log('state2', state);
 });
-/*退订*/
-unsubscribe();
-
+/*自增*/
 store.dispatch({
   type: 'INCREMENT'
 });
 
+/*修改 name*/
+store.dispatch({
+  type: 'SET_NAME',
+  name: '前端九部2号'
+});
+
+
+
+/*生成新的reducer*/
+const nextReducer = combineReducers({
+  counter: counterReducer,
+});
+/*replaceReducer*/
+store.replaceReducer(nextReducer);
+
+console.log('state3', store.getState());

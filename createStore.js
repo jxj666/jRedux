@@ -1,10 +1,10 @@
 /*
- * @LastEditTime: 2020-10-16 19:46:53
+ * @LastEditTime: 2020-10-16 19:53:48
  * @LastEditors: jinxiaojian
  */
 // createStore，提供了 changeState(dispatch)，getState，subscribe 三个能力
 export const createStore = function (reducer, initState, rewriteCreateStoreFunc) {
-  if (typeof initState === 'function'){
+  if (typeof initState === 'function') {
     rewriteCreateStoreFunc = initState;
     initState = undefined;
   }
@@ -15,6 +15,9 @@ export const createStore = function (reducer, initState, rewriteCreateStoreFunc)
   console.log('in createStore', reducer, initState)
   let state = initState
   let listeners = [];
+
+  dispatch({ type: Symbol() })
+
   /*订阅*/
   function subscribe (listener) {
     listeners.push(listener);
@@ -34,11 +37,17 @@ export const createStore = function (reducer, initState, rewriteCreateStoreFunc)
   function getState () {
     return state
   }
-  dispatch({ type: Symbol() })
+  function replaceReducer (nextReducer) {
+    reducer = nextReducer
+    /*刷新一遍 state 的值，新来的 reducer 把自己的默认状态放到 state 树上去*/
+    dispatch({ type: Symbol() })
+  }
+
   return {
     subscribe,
     dispatch,
-    getState
+    getState,
+    replaceReducer,
   }
 }
 
