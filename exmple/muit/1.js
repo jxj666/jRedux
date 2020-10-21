@@ -1,8 +1,8 @@
 /*
- * @LastEditTime: 2020-09-06 00:13:23
+ * @LastEditTime: 2020-10-21 19:14:19
  * @LastEditors: jinxiaojian
  */
-import {createStore} from '../createStore.js'
+import {createStore} from '../../createStore.js'
 // 拆分reducer
 
 function counterReducer (state, action) {
