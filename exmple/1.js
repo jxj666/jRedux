@@ -62,7 +62,6 @@ function setName(name) {
 
 
 const actions = bindActionCreators({ increment, setName }, store.dispatch);
-console.log(actions)
 
 actions.increment(); /*自增*/
 actions.setName('九部威武'); /*修改 info.name*/
