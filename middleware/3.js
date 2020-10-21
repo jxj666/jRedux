@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-10-16 20:02:06
+ * @LastEditTime: 2020-10-21 16:42:51
  * @LastEditors: jinxiaojian
  */
 import { createStore } from '../createStore.js'
@@ -53,22 +53,14 @@ const reducer = combineReducers({
 });
 
 
-
-
-
-
-
-// const middlewareAdd = applyMiddleware(middlewareEx,middlewareIn,middlewareTime)
-// const newCreateStore=middlewareAdd(createStore)
-// let store = newCreateStore(reducer);
-
 const rewriteCreateStoreFunc = applyMiddleware(middlewareEx, middlewareIn, middlewareTime);
 const store = createStore(reducer, rewriteCreateStoreFunc);
+
+/*退订*/
 const unsubscribe = store.subscribe(() => {
   let state = store.getState();
   console.log(state.counter.count);
 });
-/*退订*/
 unsubscribe();
 
 store.dispatch({
