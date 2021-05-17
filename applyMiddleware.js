@@ -1,5 +1,5 @@
 /*
- * @LastEditTime: 2020-10-16 19:43:34
+ * @LastEditTime: 2021-05-17 11:26:30
  * @LastEditors: jinxiaojian
  */
 export const applyMiddleware = function (...middlewares) {
@@ -20,12 +20,8 @@ export const applyMiddleware = function (...middlewares) {
       // chain.reverse().map(middleware => {
       //   dispatch = middleware(dispatch);
       // });
-
-
       let dispatch = compose(...chain)(store.dispatch)
-
       console.log('chain', chain)
-
       /*2. 重写 dispatch*/
       store.dispatch = dispatch;
       return store;
