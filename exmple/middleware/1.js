@@ -2,11 +2,11 @@
  * @LastEditTime: 2020-10-21 19:13:44
  * @LastEditors: jinxiaojian
  */
-import { createStore } from '../../createStore.js'
-import { combineReducers } from '../../combineReducers.js'
-import { middlewareEx } from '../../middleware/ex.js'
-import { middlewareIn } from '../../middleware/in.js'
-import { middlewareTime } from '../../middleware/time.js'
+import { createStore } from '../../jRedux/createStore.js'
+import { combineReducers } from '../../jRedux/combineReducers.js'
+import { middlewareEx } from '../../jRedux/middleware/ex.js'
+import { middlewareIn } from '../../jRedux/middleware/in.js'
+import { middlewareTime } from '../../jRedux/middleware/time.js'
 
 function counterReducer (state = {
   count: 0

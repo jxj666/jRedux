@@ -5,8 +5,8 @@
 // 我们需要拆分，一个 state，一个 reducer 写一块
 //  拆分state
 
-import { createStore } from '../../createStore.js'
-import { combineReducers } from '../../combineReducers.js'
+import { createStore } from '../../jRedux/createStore.js'
+import { combineReducers } from '../../jRedux/combineReducers.js'
 
 //将state跟action合并
 

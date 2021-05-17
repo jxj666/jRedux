@@ -1,6 +1,10 @@
-import {bindActionCreators} from '../bindActionCreators.js'
-import {combineReducers} from '../combineReducers.js'
-import {createStore} from '../createStore.js'
+/*
+ * @LastEditTime: 2021-05-17 16:30:22
+ * @LastEditors: jinxiaojian
+ */
+import {bindActionCreators} from '../jRedux/bindActionCreators.js'
+import {combineReducers} from '../jRedux/combineReducers.js'
+import {createStore} from '../jRedux/createStore.js'
 
 
 function counterReducer (state = {
