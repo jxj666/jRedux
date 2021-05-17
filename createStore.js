@@ -1,19 +1,25 @@
 /*
- * @LastEditTime: 2020-10-16 19:53:48
+ * @LastEditTime: 2021-05-17 16:19:08
  * @LastEditors: jinxiaojian
  */
+// CreateStore作为生成唯一store的函数，是Redux中最核心的API
 // createStore，提供了 changeState(dispatch)，getState，subscribe 三个能力
-export const createStore = function (reducer, initState, rewriteCreateStoreFunc) {
-  if (typeof initState === 'function') {
-    rewriteCreateStoreFunc = initState;
-    initState = undefined;
+
+// 首先enhancer在缺省条件下判断如果preloadedState是个函数，则将其视为enhancer，这里enhancer本身是个引入中间件扩展功能的返回函数，enhancer(createStore)(reducer, preloadedState)实际上是输出一个增强了dispatch功能的store
+
+// dispatch主要完成：调用对应reducer->通知所有listener更新状态
+
+export const createStore = function (reducer, preloadedState, enhancer) {
+  if (typeof preloadedState === 'function') {
+    enhancer = preloadedState;
+    preloadedState = undefined;
   }
-  if (rewriteCreateStoreFunc) {
-    const newCreateStore = rewriteCreateStoreFunc(createStore);
-    return newCreateStore(reducer, initState);
+  if (enhancer) {
+    const newCreateStore = enhancer(createStore);
+    return newCreateStore(reducer, preloadedState);
   }
-  console.log('in createStore', reducer, initState)
-  let state = initState
+  // console.log('in createStore', reducer, preloadedState)
+  let state = preloadedState
   let listeners = [];
 
   dispatch({ type: Symbol() })

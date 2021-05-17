@@ -1,7 +1,10 @@
 /*
- * @LastEditTime: 2021-05-17 11:26:30
+ * @LastEditTime: 2021-05-17 11:51:33
  * @LastEditors: jinxiaojian
  */
+import compose from './compose'
+
+
 export const applyMiddleware = function (...middlewares) {
   /*返回一个重写createStore的方法*/
   return function rewriteCreateStoreFunc (oldCreateStore) {
@@ -29,10 +32,10 @@ export const applyMiddleware = function (...middlewares) {
   }
 }
 
-export default function compose (...funcs) {
-  if (funcs.length === 1) {
-    return funcs[0]
-  }
-  //[].reduce 数组累加  
-  return funcs.reduce((a, b) => (...args) => a(b(...args)))
-}
+// export default function compose (...funcs) {
+//   if (funcs.length === 1) {
+//     return funcs[0]
+//   }
+//   //[].reduce 数组累加  
+//   return funcs.reduce((a, b) => (...args) => a(b(...args)))
+// }

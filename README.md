@@ -1,9 +1,13 @@
 <!--
- * @LastEditTime: 2021-05-17 11:27:36
+ * @LastEditTime: 2021-05-17 11:47:23
  * @LastEditors: jinxiaojian
 -->
 # redux
 
+## redeux 应用原则
+1. 单一数据源
+2. State 是只读的
+3. Reducer必须是一个纯函数
 
 
 ### createStore
@@ -39,4 +43,5 @@ dispatch( action ) 触发 action，生成新的 state
 扩展 dispatch 函数！
 
 
-![main.png](main.png)
+![1](./img/1.png)
+![2](./img/2.jpg)

@@ -1,7 +1,9 @@
 /*
- * @LastEditTime: 2020-09-06 01:28:08
+ * @LastEditTime: 2021-05-17 16:19:32
  * @LastEditors: jinxiaojian
  */
+
+// combineReducers部分的源码相对冗杂，其中包括对生产环境/开发环境以及其他系列入参类型的校验
 
 // combineReducers 函数来把多个 reducer 函数合并成一个 reducer 函数
 export function combineReducers (reducers) {
